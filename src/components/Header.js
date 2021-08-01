@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import {
   makeStyles,
   AppBar,
@@ -9,6 +9,7 @@ import {
   Icon,
 } from '@material-ui/core'
 import LOGO from '../assets/logo.png'
+import { isAuthenticated, logout } from '../api'
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -44,7 +45,7 @@ const NAV_ITEMS = [
   { id: 3, label: 'Question Details', path: '/question-details' },
 ]
 
-function Header() {
+function Header({ history }) {
   const classes = useStyles()
   return (
     <AppBar
@@ -79,14 +80,23 @@ function Header() {
             ))}
         </nav>
         {/* TODO: handle this logout button for only authenticated users */}
-        <Box className={classes.meta}>
-          <Button onClick={() => {}} color="secondary" className={classes.link}>
-            <Icon>logout</Icon>
-          </Button>
-        </Box>
+        {isAuthenticated() && (
+          <Box className={classes.meta}>
+            <Button
+              onClick={() => {
+                logout()
+                history.push('/login')
+              }}
+              color="secondary"
+              className={classes.link}
+            >
+              <Icon>logout</Icon>
+            </Button>
+          </Box>
+        )}
       </Toolbar>
     </AppBar>
   )
 }
 
-export default Header
+export default withRouter(Header)

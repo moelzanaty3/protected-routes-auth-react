@@ -5,8 +5,9 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import LOGO from '../assets/logo.png'
+import { login } from '../api'
 
 const styles = (theme) => ({
   paper: {
@@ -34,12 +35,27 @@ const styles = (theme) => ({
 })
 
 class Login extends Component {
+  state = {
+    redirectToReferrer: false,
+  }
+
   handleLoginSubmit = () => {
     //TODO: add login logic
+    login()
+    this.setState(() => ({
+      redirectToReferrer: true,
+    }))
   }
 
   render() {
     const { classes } = this.props
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { redirectToReferrer } = this.state
+
+    if (redirectToReferrer === true) {
+      return <Redirect to={from} />
+    }
+
     return (
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>

@@ -10,6 +10,7 @@ import {
   LeaderBoard,
   QuestionDetails,
 } from './views'
+import ProtectedRoute from './ProtectedRoute'
 
 class App extends Component {
   render() {
@@ -26,14 +27,18 @@ class App extends Component {
                 name="Login Page"
                 render={(props) => <Login {...props} />}
               />
-              {/* TODO: convert next three routes to protected */}
-              <Route exact path="/" name="Dashboard" component={Dashboard} />
-              <Route
+              <ProtectedRoute
+                exact
+                path="/"
+                name="Dashboard"
+                component={Dashboard}
+              />
+              <ProtectedRoute
                 path="/leader-board"
                 name="Leader Board"
                 component={LeaderBoard}
               />
-              <Route
+              <ProtectedRoute
                 path="/question-details"
                 name="Question Details"
                 component={QuestionDetails}

@@ -7,8 +7,7 @@ import {
 } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
 import LOGO from '../assets/logo.png'
-import { login } from '../api'
- 
+
 const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -36,8 +35,7 @@ const styles = (theme) => ({
 
 class Login extends Component {
   handleLoginSubmit = () => {
-    login()
-    this.props.history.push('/')
+    //TODO: add login logic
   }
 
   render() {
